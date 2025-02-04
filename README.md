@@ -1,5 +1,5 @@
 # calories-counter
-Веб-приложение для учета потребления калорий
+Pet-проект. Веб-приложение для учета потребления калорий
 
 ### Технологии
 javascript, react, redux toolkit, react-router
