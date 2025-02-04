@@ -5,12 +5,10 @@ import { FoodSearch } from "../foodSearch/food-search.jsx";
 import { useState } from "react";
 import { CreateNewFood } from "../createNewFood/create-new-food.jsx";
 import AddFood from "../addFood/add-food.jsx";
+import { useSelector } from "react-redux";
+import { selectListOfEaten } from "../../redux/entities/eatenFood/eaten-food-slice.js";
 
-let mock = [
-  { time: "14:15", dish: "Макароны", weight: "200", calories: "400" },
-  { time: "15:30", dish: "Салат", weight: "300", calories: "150" },
-  { time: "18:00", dish: "Курица", weight: "150", calories: "300" },
-];
+
 const foodMock = {
   name: "манго",
   calories: 60,
@@ -20,6 +18,11 @@ const foodMock = {
 };
 
 export const ListOfEaten = () => {
+
+  const eatenFood = useSelector(selectListOfEaten);
+
+  const [selectedFood, setSelectedFood] = useState();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("FoodSearch");
   const showModal = () => {
@@ -28,14 +31,16 @@ export const ListOfEaten = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+ 
   let modalFoodSearch;
+
   if (activeModal == "FoodSearch") {
     modalFoodSearch = (
       <>
         <FoodSearch
-          onFoodSelected={() => {
+          onFoodSelected={(food) => {
             setActiveModal("AddFood");
+            setSelectedFood(food)
           }}
         />
         <Button
@@ -58,7 +63,7 @@ export const ListOfEaten = () => {
   } else if (activeModal == "AddFood") {
     modalFoodSearch = (
       <AddFood
-        food={foodMock}
+        food={selectedFood}
         onFoodAdded={() => {
           handleCancel();
           setActiveModal("FoodSearch");
@@ -70,7 +75,7 @@ export const ListOfEaten = () => {
   return (
     <div>
       <Button onClick={showModal}>Добавить прием пищи</Button>
-      {mock.map((data, index) => (
+      {eatenFood.map((data, index) => (
         <FoodCard key={index} {...data} />
       ))}
       <Modal open={isModalOpen} onCancel={handleCancel}>

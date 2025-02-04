@@ -2,66 +2,37 @@ import { useState } from "react";
 import { Button } from "../button/button.jsx";
 import { Modal } from "antd";
 import { CreateNewFood } from "../createNewFood/create-new-food.jsx";
+import { useSelector } from "react-redux";
+import { selectFoodByName } from "../../redux/entities/modal/modal-slice.js";
 
-const foodMock = [
-  { name: "манго", calories: 60, protein: 0.8, fat: 0.4, carbohydrates: 15 },
-  {
-    name: "мороженое",
-    calories: 207,
-    protein: 3.5,
-    fat: 11,
-    carbohydrates: 24,
-  },
-  {
-    name: "макароны",
-    calories: 158,
-    protein: 5.8,
-    fat: 1.1,
-    carbohydrates: 31,
-  },
-];
-
-export const FoodSearch = ({onFoodSelected}) => {
-  const [input, setInput] = useState("");
-  const [filteredFood, setFilteredFood] = useState(foodMock);
+export const FoodSearch = ({ onFoodSelected }) => {
+  const [searchString, setSearchString] = useState("");
+  const foodOnSearch = useSelector((state) =>
+    selectFoodByName(state, searchString)
+  );
 
   const handleInputChange = (event) => {
     const input = event.target.value;
-    setInput(input);
-
-    const filtered = foodMock.filter((food) =>
-      food.name.toLowerCase().includes(input.toLowerCase())
-    );
-    setFilteredFood(filtered);
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+    setSearchString(input);
   };
 
   return (
     <>
       <input
         type="text"
-        value={input}
+        value={searchString}
         onChange={handleInputChange}
         placeholder="Введите название продукта"
       />
       <ol>
-        {filteredFood.map((food) => (
+        {foodOnSearch.map((food) => (
           <li key={food.name}>
             {food.name} - {food.calories} калорий, {food.protein} белков,
             {food.fat} жиров, {food.carbohydrates} углеводов
-            <button onClick={onFoodSelected}>+</button>
+            <button onClick={() => onFoodSelected(food)}>+</button>
           </li>
         ))}
       </ol>
-      
-  
     </>
   );
 };

@@ -1,7 +1,12 @@
+import { useSelector } from "react-redux";
 import { UseProfile } from "./useProfile";
+import { selectProfile } from "../../redux/entities/profile/profile-slice";
 
 export const Profile = () => {
-  const { profile, setHeight, setWeight, setAge, setGender } = UseProfile();
+
+  const profileData = useSelector(selectProfile)
+
+  const { profile, setHeight, setWeight, setAge, setGender } = UseProfile(profileData);
   const { height, weight, age, gender } = profile;
 
 

@@ -49,15 +49,8 @@ const reducer = (oldState, { type, payload }) => {
   }
 };
 
-const DEFAULT_PROFILE_VALUE = {
-  height: 0,
-  weight: 0,
-  age: 0,
-  gender: "male",
-};
-
-export const UseProfile = () => {
-  const [profile, dispatch] = useReducer(reducer, DEFAULT_PROFILE_VALUE);
+export const UseProfile = (profileData) => {
+  const [profile, dispatch] = useReducer(reducer, profileData);
 
   const setHeight = (height) => {
     let action = { type: "SET_HEIGHT", payload: height };
