@@ -1,15 +1,26 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UseProfile } from "./useProfile";
-import { selectProfile } from "../../redux/entities/profile/profile-slice";
+import { selectProfile, updateProfile } from "../../redux/entities/profile/profile-slice";
+import { useEffect } from "react";
 
 export const Profile = () => {
 
   const profileData = useSelector(selectProfile)
-
-  const { profile, setHeight, setWeight, setAge, setGender } = UseProfile(profileData);
+  
+  const { profile, setHeight, setWeight, setAge, setGender, setProfile } = UseProfile(profileData);
   const { height, weight, age, gender } = profile;
 
+  // useEffect(() => {
+  //   setProfile(profileData)
+  // }, [profileData])
 
+  const dispatch = useDispatch()
+
+  const saveProfile = () => {
+    console.log(2)
+    dispatch(updateProfile(profile))
+  }
+  
   return (
     <>
       <label>
@@ -40,7 +51,7 @@ export const Profile = () => {
         <input type="radio" checked={gender === "female"} onChange={() => setGender("female")} />
         Женский
       </label>
-      <button>Сохранить</button>
+      <button onClick={saveProfile}>Сохранить</button>
     </>
   );
 };

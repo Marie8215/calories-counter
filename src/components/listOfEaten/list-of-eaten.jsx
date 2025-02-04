@@ -5,43 +5,41 @@ import { FoodSearch } from "../foodSearch/food-search.jsx";
 import { useState } from "react";
 import { CreateNewFood } from "../createNewFood/create-new-food.jsx";
 import AddFood from "../addFood/add-food.jsx";
-import { useSelector } from "react-redux";
-import { selectListOfEaten } from "../../redux/entities/eatenFood/eaten-food-slice.js";
+import { useSelector, useDispatch } from "react-redux";
+import { addFood, selectListOfEaten } from "../../redux/entities/eatenFood/eaten-food-slice.js";
 
-
-const foodMock = {
-  name: "манго",
-  calories: 60,
-  protein: 0.8,
-  fat: 0.4,
-  carbohydrates: 15,
-};
 
 export const ListOfEaten = () => {
-
   const eatenFood = useSelector(selectListOfEaten);
+  const dispatch = useDispatch();
 
   const [selectedFood, setSelectedFood] = useState();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("FoodSearch");
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
     setActiveModal("FoodSearch");
   };
- 
+
+  const handleFoodAdded = (food) => {
+    dispatch(addFood(food));
+    handleCancel();
+  };
+
   let modalFoodSearch;
 
-  if (activeModal == "FoodSearch") {
+  if (activeModal === "FoodSearch") {
     modalFoodSearch = (
       <>
         <FoodSearch
           onFoodSelected={(food) => {
             setActiveModal("AddFood");
-            setSelectedFood(food)
+            setSelectedFood(food);
           }}
         />
         <Button
@@ -53,7 +51,7 @@ export const ListOfEaten = () => {
         </Button>
       </>
     );
-  } else if (activeModal == "CreateNewFood") {
+  } else if (activeModal === "CreateNewFood") {
     modalFoodSearch = (
       <CreateNewFood
         onFoodCreated={() => {
@@ -61,14 +59,11 @@ export const ListOfEaten = () => {
         }}
       />
     );
-  } else if (activeModal == "AddFood") {
+  } else if (activeModal === "AddFood") {
     modalFoodSearch = (
       <AddFood
         food={selectedFood}
-        onFoodAdded={() => {
-          handleCancel();
-          setActiveModal("FoodSearch");
-        }}
+        onFoodAdded={handleFoodAdded}
       />
     );
   }
@@ -79,7 +74,7 @@ export const ListOfEaten = () => {
       {eatenFood.map((data, index) => (
         <FoodCard key={index} {...data} />
       ))}
-      <Modal open={isModalOpen} onCancel={handleCancel}>
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
         {modalFoodSearch}
       </Modal>
     </div>

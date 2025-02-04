@@ -12,6 +12,10 @@ const maxAge = 120;
 
 const reducer = (oldState, { type, payload }) => {
   switch (type) {
+    case "SET_PROFILE": {
+      // todo check validity
+      return payload;      
+    }
     case "SET_HEIGHT": {
       let newState = { ...oldState };
       const { isNumber, number } = convertToNumber(payload);
@@ -65,6 +69,10 @@ export const UseProfile = (profileData) => {
   const setGender = (gender) => {
     dispatch({ type: "SET_GENDER", payload: gender });
   };
+  const setProfile = (profile) => {
+    let action = { type: "SET_PROFILE", payload: profile };
+    dispatch(action);
+  };
 
   return {
     profile,
@@ -72,5 +80,6 @@ export const UseProfile = (profileData) => {
     setWeight,
     setAge,
     setGender,
+    setProfile,
   };
 };

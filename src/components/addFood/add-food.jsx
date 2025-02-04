@@ -1,30 +1,45 @@
 import { useState } from "react";
 
-function AddFood ({food, onFoodAdded}) {
+function AddFood({ food, onFoodAdded }) {
+  const [weight, setWeight] = useState(0);
 
-    const [weight, setWeight] = useState(0)
+  let currentDate = new Date();
+  let hours = currentDate.getHours();
+  let minutes = currentDate.getMinutes();
 
-    function addFood() {
-
-        if (weight === 0){
-            return;
-        }
-
-        onFoodAdded()
-
+  function addFood() {
+    if (weight === 0) {
+      return;
     }
 
-    return <>
-        <h2>{food.name}</h2>
-        <p>Белков {food.proteins} на 100 г</p>
-        <p>Жиров {food.fats} на 100 г</p>
-        <p>Углеводов {food.carbohydrates} на 100 г</p>
-        <p>ККалорий {food.calories} на 100 г</p>
-        <input placeholder="Введите вес" onChange={e => setWeight(e.target.value)} г/>
+    const newFood = {
+      time: `${hours}:${minutes}`,
+      dish: food.name,
+      weight: weight,
+      calories: food.calories,
+      proteins: food.proteins,
+      fats: food.fats,
+      carbohydrates: food.carbohydrates,
+    };
 
-        <p>{`Итого: ${Math.floor(food.calories / 100 * weight)} ККал`}</p>
-        <button onClick={addFood}>Добавить</button>
+    onFoodAdded(newFood);
+  }
+
+  return (
+    <>
+      <h2>{food.name}</h2>
+      <p>Белков {food.proteins} на 100 г</p>
+      <p>Жиров {food.fats} на 100 г</p>
+      <p>Углеводов {food.carbohydrates} на 100 г</p>
+      <p>ККалорий {food.calories} на 100 г</p>
+      <input
+        placeholder="Введите вес"
+        onChange={(e) => setWeight(e.target.value)}
+      />{" "}
+      г<p>{`Итого: ${Math.floor((food.calories / 100) * weight)} ККал`}</p>
+      <button onClick={addFood}>Добавить</button>
     </>
-};
+  );
+}
 
 export default AddFood;
