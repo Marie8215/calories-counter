@@ -30,6 +30,7 @@ export const ListOfEaten = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setActiveModal("FoodSearch");
   };
  
   let modalFoodSearch;
