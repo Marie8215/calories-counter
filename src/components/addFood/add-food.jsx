@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToList } from "../../redux/entities/eatenFood/add-to-list";
 
 function AddFood({ food, onFoodAdded }) {
   const [weight, setWeight] = useState(0);
@@ -20,6 +22,7 @@ function AddFood({ food, onFoodAdded }) {
       proteins: food.proteins,
       fats: food.fats,
       carbohydrates: food.carbohydrates,
+      id: food.id
     };
 
     onFoodAdded(newFood);
@@ -36,7 +39,7 @@ function AddFood({ food, onFoodAdded }) {
         placeholder="Введите вес"
         onChange={(e) => setWeight(e.target.value)}
       />{" "}
-      г<p>{`Итого: ${Math.floor((food.calories / 100) * weight)} ККал`}</p>
+      <p>{`Итого: ${Math.floor((food.calories / 100) * weight)} ККал`}</p>
       <button onClick={addFood}>Добавить</button>
     </>
   );

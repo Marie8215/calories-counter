@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { UseProfile } from "./useProfile";
-import { selectProfile, updateProfile } from "../../redux/entities/profile/profile-slice";
+import { selectProfile } from "../../redux/entities/profile/profile-slice";
 import { useEffect } from "react";
+import { getProfile } from "../../redux/entities/profile/get-profile";
+import { updateProfile } from "../../redux/entities/profile/update-profile";
 
 export const Profile = () => {
 
@@ -10,16 +12,20 @@ export const Profile = () => {
   const { profile, setHeight, setWeight, setAge, setGender, setProfile } = UseProfile(profileData);
   const { height, weight, age, gender } = profile;
 
-  // useEffect(() => {
-  //   setProfile(profileData)
-  // }, [profileData])
-
   const dispatch = useDispatch()
 
   const saveProfile = () => {
-    console.log(2)
+    // dispatch(updateProfile(profile))
     dispatch(updateProfile(profile))
   }
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setProfile(profileData)
+  }, [profileData]);
   
   return (
     <>

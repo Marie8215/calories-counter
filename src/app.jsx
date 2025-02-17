@@ -4,6 +4,7 @@ import { CaloriesPage } from "./components/caloriesPage/calories-page";
 import { Blog } from "./components/blog/blog";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { Authentication } from "./components/authentication/authentication";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/blog",
     element: <Blog />,
+  },
+  {
+    path: "/login",
+    element: <Authentication />,
   },
 ]);
 

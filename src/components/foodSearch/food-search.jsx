@@ -1,12 +1,18 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectFoodByName } from "../../redux/entities/modal/modal-slice.js";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectFoodByName } from "../../redux/entities/modal/modal-slice";
+import { getFoodList } from "../../redux/entities/modal/get-food-list";
 
 export const FoodSearch = ({ onFoodSelected }) => {
   const [searchString, setSearchString] = useState("");
-  const foodOnSearch = useSelector((state) =>
-    selectFoodByName(state, searchString)
-  );
+
+  const dispatch = useDispatch();
+
+  let foodOnSearch = useSelector(selectFoodByName);
+
+  useEffect(() => {
+    dispatch(getFoodList(searchString));
+  }, [searchString]);
 
   const handleInputChange = (event) => {
     const input = event.target.value;

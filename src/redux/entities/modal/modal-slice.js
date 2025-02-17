@@ -1,46 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getFoodList } from "./get-food-list";
 
-const initialState = [
-  {
-    name: "манго",
-    calories: 60,
-    proteins: 0.8,
-    fats: 0.4,
-    carbohydrates: 15,
-  },
-  {
-    name: "мороженое",
-    calories: 207,
-    proteins: 3.5,
-    fats: 11,
-    carbohydrates: 24,
-  },
-  {
-    name: "макароны",
-    calories: 158,
-    proteins: 5.8,
-    fats: 1.1,
-    carbohydrates: 31,
-  },
-];
+
+const initialState = {
+  foodList: [],
+  status: 'idle',
+  error: null,
+};
 
 export const ModalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
     addFood: (state, action) => {
-      state.push(action.payload);
-      return state;
+      state.foodList.push(action.payload);
     },
   },
-  selectors: {
-    selectFoodByName: (state, searchString) =>
-      state.filter((food) =>
-        food.name.toLowerCase().includes(searchString.toLowerCase())
-      ),
+  extraReducers: (builder) => {
+    builder
+      .addCase(getFoodList.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getFoodList.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.foodList = action.payload;
+      })
+      .addCase(getFoodList.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      });
   },
 });
 
 export const { addFood } = ModalSlice.actions;
-export const { selectFoodByName } = ModalSlice.selectors;
+
+export const selectFoodByName = (state) => state.modal.foodList;
+
 export default ModalSlice.reducer;

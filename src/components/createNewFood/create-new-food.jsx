@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addFood } from "../../redux/entities/modal/modal-slice.js";
 import { Button } from "../button/button";
 import styles from "./create-new-food.module.css";
+import { createNewFood } from "../../redux/entities/modal/create-new-food.js";
 
 export const CreateNewFood = ({ onFoodCreated }) => {
   const [inputFood, setInputFood] = useState({
@@ -12,7 +13,10 @@ export const CreateNewFood = ({ onFoodCreated }) => {
     carbohydrates: 0,
   });
 
+  let countedCalories = inputFood.proteins * 4 + inputFood.carbohydrates * 4 + inputFood.fats * 9
+
   const dispatch = useDispatch();
+
 
   function addNewFood(event) {
     let inputValue = event.target.value;
@@ -38,7 +42,10 @@ export const CreateNewFood = ({ onFoodCreated }) => {
       carbohydrates: inputFood.carbohydrates,
     };
 
-    dispatch(addFood(newFood));
+    dispatch(createNewFood({
+      ...inputFood,
+      calories: countedCalories
+    }))
     onFoodCreated();
   };
 
@@ -87,9 +94,7 @@ export const CreateNewFood = ({ onFoodCreated }) => {
       <p>
         {" "}
         Итого{" "}
-        {inputFood.proteins * 4 +
-          inputFood.carbohydrates * 4 +
-          inputFood.fats * 9}{" "}
+        {countedCalories}{" "}
         калорий на 100гр
       </p>
       <Button onClick={onCreate}>Добавить</Button>

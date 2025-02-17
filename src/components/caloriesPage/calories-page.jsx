@@ -1,5 +1,5 @@
 import { ListOfEaten } from "../listOfEaten/list-of-eaten";
-import { NormPerDay } from "../norm-per-day/norm-per-day";
+import { NormPerDay } from "../normPerDay/norm-per-day";
 import { Profile } from "../profile/profile";
 import { Statistics } from "../statistics/statistics";
 import styles  from "./caloriesPage.module.css";

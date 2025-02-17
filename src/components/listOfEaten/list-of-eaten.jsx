@@ -1,13 +1,14 @@
 import { Modal } from "antd";
-import { FoodCard } from "../FoodCard/food-card.jsx";
+import { FoodCard } from "../foodCard/food-card.jsx";
 import { Button } from "../button/button.jsx";
 import { FoodSearch } from "../foodSearch/food-search.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateNewFood } from "../createNewFood/create-new-food.jsx";
 import AddFood from "../addFood/add-food.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { addFood, selectListOfEaten } from "../../redux/entities/eatenFood/eaten-food-slice.js";
-
+import {  selectListOfEaten} from "../../redux/entities/eatenFood/eaten-food-slice.js";
+import { getListOfEaten } from "../../redux/entities/eatenFood/get-list-of-eaten.js";
+import { addToList } from "../../redux/entities/eatenFood/add-to-list.js";
 
 export const ListOfEaten = () => {
   const eatenFood = useSelector(selectListOfEaten);
@@ -16,6 +17,10 @@ export const ListOfEaten = () => {
   const [selectedFood, setSelectedFood] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("FoodSearch");
+
+  useEffect(() => {
+    dispatch(getListOfEaten());
+  }, [dispatch]);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -27,8 +32,14 @@ export const ListOfEaten = () => {
   };
 
   const handleFoodAdded = (food) => {
-    dispatch(addFood(food));
+    dispatch(
+      addToList({
+        weight: food.weight,
+        id: food.id,
+      })
+    );
     handleCancel();
+    eatenFood = useSelector(selectListOfEaten);
   };
 
   let modalFoodSearch;
@@ -61,10 +72,7 @@ export const ListOfEaten = () => {
     );
   } else if (activeModal === "AddFood") {
     modalFoodSearch = (
-      <AddFood
-        food={selectedFood}
-        onFoodAdded={handleFoodAdded}
-      />
+      <AddFood food={selectedFood} onFoodAdded={handleFoodAdded} />
     );
   }
 

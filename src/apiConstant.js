@@ -1,0 +1,1 @@
+export const ServerAdress = "https://localhost:7240"
