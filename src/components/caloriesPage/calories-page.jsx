@@ -7,22 +7,18 @@ import styles  from "./caloriesPage.module.css";
 export const CaloriesPage = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.row}>
-        <div className={styles.flexItem}>
+        <div className={`${styles.flexItem} ${styles.dailyCalories}`}>
           <NormPerDay />
         </div>
         <div className={styles.flexItem}>
           <Profile />
         </div>
-      </div>
-      <div className={styles.row}>
         <div className={styles.flexItem}>
           <ListOfEaten />
         </div>
         <div className={styles.flexItem}>
           <Statistics />
         </div>
-      </div>
     </div>
   );
 };

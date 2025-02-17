@@ -1,0 +1,14 @@
+.header{
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.footer{
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 250px;
+}

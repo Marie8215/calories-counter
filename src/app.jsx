@@ -5,6 +5,7 @@ import { Blog } from "./components/blog/blog";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Authentication } from "./components/authentication/authentication";
+import styles from "./app.module.css"
 
 const router = createBrowserRouter([
   {

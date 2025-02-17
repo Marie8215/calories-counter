@@ -1,9 +1,11 @@
+import styles from "./layout.module.css";
+
 export const Layout = ({ children }) => {
   return (
     <>
-      <header>header</header>
+      <header className={styles.header}>header</header>
       {children}
-      <footer>footer</footer>
+      <footer className={styles.footer}>footer</footer>
     </>
   );
 };
