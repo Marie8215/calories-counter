@@ -1,10 +1,17 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectStatistics } from "../../redux/entities/statistics/statistics-slice";
+import { getStatistics } from "../../redux/entities/statistics/get-statistics";
 
 export const Statistics = () => {
   const [period, setPeriod] = useState(3);
-  const statistics = useSelector((state) => selectStatistics(state, period));
+  const dispatch = useDispatch();
+  const statistics = useSelector(selectStatistics);
+  console.log(statistics)
+
+  useEffect(() => {
+    dispatch(getStatistics(period));
+  }, [dispatch, period]);
 
   const getDayWord = (count) => {
     let lastDigit = count % 10;
@@ -46,6 +53,9 @@ export const Statistics = () => {
           Перебор по углеводам: {statistics.overCarbohydrates}{" "}
           {getDayWord(statistics.overCarbohydrates)}
         </p>
+        <p>
+           Самое частое блюдо: {statistics.mostCommonlyConsumedProduct?.productName}
+        </p> 
       </div>
     </div>
   );
