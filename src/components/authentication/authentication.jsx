@@ -9,8 +9,6 @@ export const Authentication = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-
-
   const tryLogin = async () => {
     const response = await fetch(`${ServerAdress}/api/user/login`, {
       method: "POST",

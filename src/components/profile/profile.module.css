@@ -1,0 +1,15 @@
+.formInput {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.formInput>p {
+   font-weight: 400;
+}
+
+.formInput>input {
+    width: 200px;
+    padding: 5px;
+    height: 35px;
+}
+

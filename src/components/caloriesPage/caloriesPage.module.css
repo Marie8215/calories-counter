@@ -14,9 +14,8 @@
 
 .flexItem {
   width: calc(50% - 10px);
-  background-color: rgb(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.513);
   border-radius: 20px;
-  box-sizing: border-box; /* todo надо включить глобально*/
   padding: 30px;
   box-shadow: 0px 4px 45px -28px rgba(34, 60, 80, 0.2);
 }

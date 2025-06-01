@@ -1,7 +1,9 @@
 @import 'reset.css';
 
-body{
-    background: linear-gradient(45deg, #e6f4ff, #f0f0f0);
-    box-sizing: border-box; /* надо включить глобально*/
+* {
+    box-sizing: border-box;
+}
 
+body {
+    background: linear-gradient(45deg, #e6f4ff, #f0f0f0);
 }
